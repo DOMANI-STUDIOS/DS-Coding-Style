@@ -4,34 +4,32 @@
 * [Object Pattern] (https://github.com/shichuan/javascript-patterns/blob/master/jquery-plugin-patterns/basic.html)
 
 		(function( $ ){
-		  	$.fn.myPluginName = function() {
-		    	var ds = {
+	    	var ds = {
 
-					listen: function() {
-						return;
-					},
+				listen: function() {
+					return;
+				},
 
-					init: function() {
-						ds.listen();
-					}
-				};
+				init: function() {
+					ds.listen();
+				}
+			};
 
-				$.PROJ.Filename = function(method) {
-					if (ds[method]){
-						return ds[method].apply(this,Array.prototype.slice.call(arguments,1));
-					}
-					else if (typeof method === 'object' || ! method){
-						return ds.init.apply(this,arguments);
-					}
-					else {
-						$.error('Method ' +  method + ' does not exist on jQuery.ORB.Base');
-					}
-				};
+			$.PROJ.Filename = function(method) {
+				if (ds[method]){
+					return ds[method].apply(this,Array.prototype.slice.call(arguments,1));
+				}
+				else if (typeof method === 'object' || ! method){
+					return ds.init.apply(this,arguments);
+				}
+				else {
+					$.error('Method ' +  method + ' does not exist on jQuery.ORB.Base');
+				}
+			};
 
-				$(document).ready(function() {
-					$.PROJ.Filename();
-				});
-		  	};
+			$(document).ready(function() {
+				$.PROJ.Filename();
+			});
 		})( jQuery );
 
 ## Code Patterns
