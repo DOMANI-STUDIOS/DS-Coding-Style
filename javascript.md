@@ -23,7 +23,7 @@
 					return ds.init.apply(this,arguments);
 				}
 				else {
-					$.error('Method ' +  method + ' does not exist on jQuery.ORB.Base');
+					$.error('Method ' +  method + ' does not exist on jQuery.PROJ.Filename');
 				}
 			};
 
