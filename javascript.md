@@ -34,6 +34,35 @@
 
 		$.PROJ.Filename("listen");
 
+* Object Pattern
+
+		(function($) {
+			// window.DS = function() {
+			function DS() {
+				var self = this;
+				self.publicFunction = publicFunction;
+
+				init();
+
+				function init() {
+					listen();
+				}
+
+				function listen() {
+
+				}
+
+				function publicFunction() {
+
+				}
+			}
+
+			$(document).ready(function() {
+				var dsObject = new Ds();
+				dsObject.publicFunction();
+			});
+		})(jQuery);
+
 ## Code Patterns
 * [Resource] (http://shichuan.github.io/javascript-patterns/#general-patterns)
 
