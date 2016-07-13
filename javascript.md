@@ -68,6 +68,7 @@
 
 ## Debugger
 * [Resource] (https://developer.chrome.com/extensions/tut_debugging)
+* Use sourcemap if working with minified code
 
 ## Listeners
 * requestAnimationFrame in place of setTimeout or setInterval - [Resource] (https://gist.github.com/Warry/4254579)
