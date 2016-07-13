@@ -70,3 +70,7 @@
 
 ## Optimization
 * Repeated querying of the DOM via jQuery
+* Debounced scroll events
+
+## Promises
+* Exercise - [link] (https://github.com/stevekane/promise-it-wont-hurt)
