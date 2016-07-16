@@ -1,0 +1,71 @@
+<dom-module id="ds-js-format-test-result">
+  <style>
+    :host {
+      display: block;
+      padding: 8px;
+    }
+
+    strong {
+      @apply(--paper-font-headline);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    div {
+      /*@apply(--paper-font-body1);*/
+      @apply(--paper-font-code1);
+      @apply(--layout-horizontal);
+      @apply(--layout-justified);
+    }
+
+    div:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    div > span {
+      padding: 0 8px;
+    }
+
+  </style>
+
+  <template>
+    <strong>[[testResult.heading]]</strong>
+    <div>
+      <span>Time</span><span>[[calculateSeconds(time)]] s / [[time]] ms</span>
+    </div>
+    <div>
+      <span>Count Expected Value</span><span>[[expectedCount]]</span>
+    </div>
+    <div>
+      <span>Count Actual Value</span><span>[[testResult.count]]</span>
+    </div>
+  </template>
+
+  <script>
+    (function() {
+
+      'use strict';
+
+      Polymer({
+        is: 'ds-js-format-test-result',
+
+        properties: {
+          time: {
+            type: Number,
+            computed: 'computeTime(testResult.*)',
+          },
+        },
+
+        computeTime: function() {
+          return this.testResult.endTime.getTime() - this.testResult.startTime.getTime();
+        },
+
+        calculateSeconds: function(time) {
+          return time / 1000;
+        },
+
+      });
+
+    })();
+  </script>
+</dom-module>

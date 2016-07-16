@@ -1,0 +1,25 @@
+{
+  "name": "ds-coding-styles",
+  "version": "1.0.0",
+  "description": "General coding styleguide for DS developers",
+  "main": "index.js",
+  "scripts": {
+    "dev": "HTTP_PORT=1024 nodemon index.js",
+    "app": "HTTP_PORT=1024 node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DOMANI-STUDIOS/ds-coding-style.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DOMANI-STUDIOS/ds-coding-style/issues"
+  },
+  "homepage": "https://github.com/DOMANI-STUDIOS/ds-coding-style",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
+  }
+}

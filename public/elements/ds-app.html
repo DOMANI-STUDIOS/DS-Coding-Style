@@ -1,0 +1,50 @@
+<dom-module id="ds-app">
+  <style>
+    :host {
+      display: block;
+    }
+
+    main {
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .fit {
+      box-sizing: border-box;
+      padding: 16px;
+    }
+
+    paper-icon-button {
+      cursor: default;
+    }
+
+  </style>
+
+  <template>
+
+    <main>
+      <paper-header-panel>
+        <paper-toolbar>
+          <paper-icon-button icon="icons:assessment" noink></paper-icon-button>
+          <div class="title">Performance Test: Execution Time</div>
+        </paper-toolbar>
+        <div class="fit">
+          <ds-js-format-test></ds-js-format-test>
+        </div>
+      </paper-header-panel>
+    </main>
+
+  </template>
+
+  <script>
+    (function() {
+
+      'use strict';
+
+      Polymer({
+          is: 'ds-app',
+      });
+
+    })();
+  </script>
+</dom-module>

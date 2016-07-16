@@ -1,0 +1,262 @@
+<script src="../../jquery/dist/jquery.min.js"></script>
+<script src="../js/format-test.js"></script>
+<dom-module id="ds-js-format-test">
+  <style>
+    :host {
+      display: block;
+    }
+
+    .flex-equal-justified {
+      @apply(--layout-horizontal);
+      @apply(--layout-justified);
+    }
+
+    .flex-equal-justified ds-js-format-test-result {
+      @apply(--layout-flex-2);
+    }
+
+    .flex {
+      @apply(--layout-horizontal);
+    }
+
+    .flex paper-input {
+      width: 50%;
+      box-sizing: border-box;
+      padding-right: 8px;
+    }
+
+    .flex paper-input:last-child {
+      padding-left: 8px;
+      padding-right: 0;
+    }
+
+    paper-button {
+      display: block;
+      text-align: center;
+    }
+
+    .results {
+      padding-top: 16px;
+      position: relative;
+    }
+
+    .results paper-spinner {
+      position: relative;
+      top: 32px;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+    }
+
+    .results paper-material {
+      padding: 8px;
+    }
+
+  </style>
+
+  <template>
+
+    <paper-material class="settings" elevation="0">
+      <div class="flex">
+        <paper-input value="{{iterations}}" placeholder="Iterations"></paper-input>
+        <paper-input value="{{subIterations}}" placeholder="Sub-Iterations"></paper-input>
+      </div>
+      <paper-button id="runTest" disabled="[[!validSettings]]" raised>Run Test</paper-button>
+    </paper-material>
+
+    <paper-material class="results" elevation="0">
+      <paper-spinner active="[[testIsRunning]]" hidden="[[!testIsRunning]]"></paper-spinner>
+      <paper-material class="flex-equal-justified" hidden="[[!testHasResults]]">
+        <template is="dom-repeat" items="[[testList]]">
+          <ds-js-format-test-result test-result="[[item]]" expected-count="[[expectedCount]]"></ds-js-format-test-result>
+        </template>
+      </paper-material>
+    </paper-material>
+
+  </template>
+
+  <script>
+    (function() {
+
+      'use strict';
+
+      Polymer({
+        is: 'ds-js-format-test',
+
+        properties: {
+          iterations: {
+            type: Number,
+          },
+
+          subIterations: {
+            type: Number,
+          },
+
+          validSettings: {
+            type: Boolean,
+            computed: 'computeValidSettings(iterations, subIterations)'
+          },
+
+          testCount: {
+            type: Number,
+            readOnly: true,
+            value: 10,
+          },
+
+          testIsRunning: {
+            type: Boolean,
+            value: false,
+          },
+
+          testHasResults: {
+            type: Boolean,
+            value: false,
+          },
+
+          expectedCount: {
+            type: Number,
+            computed: 'computeExpectedCount(testCount, subIterations)',
+          },
+
+          testList: {
+            type: Array,
+            value: function() {
+              var time = new Date();
+
+              return [
+                {
+                  heading: 'jQuery Plugin',
+                  startTime: time,
+                  endTime: time,
+                  count: 0,
+                },
+                {
+                  heading: 'Function Assignment',
+                  startTime: time,
+                  endTime: time,
+                  count: 0,
+                },
+                {
+                  heading: 'Prototype',
+                  startTime: time,
+                  endTime: time,
+                  count: 0,
+                },
+              ];
+            },
+          }
+        },
+
+        listeners: {
+          'runTest.tap': 'onRunTest',
+        },
+
+        computeExpectedCount: function(testCount, subIterations) {
+          var initValue = 90;
+
+          return initValue + (subIterations * testCount);
+        },
+
+        computeValidSettings: function(iterations, subIterations) {
+          return !isNaN(parseInt(iterations,10)) && !isNaN(parseInt(subIterations,10));
+        },
+
+        onRunTest: function() {
+          var self = this;
+          this.set('testHasResults', false);
+          this.set('testIsRunning', true);
+
+          this.async(function(){
+            var testList = self.testList.map(self.runTest, self);
+            self.set('testList', []);
+            self.async(function(){
+              self.set('testList', testList);
+              self.set('testIsRunning', false);
+              self.set('testHasResults', true);
+            },200)
+          }, 500);
+        },
+
+        runTest: function(test) {
+          var result = {
+            startTime: 0,
+            endTime: 0,
+            count: 0,
+          };
+
+          switch(test.heading.toLowerCase()) {
+            case 'jquery plugin':
+              result = this.runJqueryTest(result)
+            break;
+            case 'funciton assignment':
+              result = this.runFunctionTest(result)
+            break;
+            default:
+              result = this.runPrototypeTest(result)
+            break;
+          }
+
+          test.startTime = result.startTime;
+          test.endTime = result.endTime;
+          test.count = result.count;
+
+          return test;
+        },
+
+        runJqueryTest: function(result) {
+          var test = null;
+          result.startTime = new Date();
+
+          for(var iteration = 0; iteration < parseInt(this.iterations, 10); iteration ++) {
+            test = jQuery(function(){});
+            test.PROJ.Filename();
+            for(var subIteration = 0; subIteration < parseInt(this.subIterations, 10); subIteration ++) {
+              test.PROJ.Filename('addToCount', this.testCount);
+            }
+          }
+
+          result.endTime = new Date();
+          result.count = test.PROJ.Filename('getCount');
+
+          return result;
+        },
+
+        runFunctionTest: function(result) {
+          var test = null;
+          result.startTime = new Date();
+
+          for(var iteration = 0; iteration < parseInt(this.iterations, 10); iteration ++) {
+            test = new DS.Filename();
+            for(var subIteration = 0; subIteration < parseInt(this.subIterations, 10); subIteration ++) {
+              test.addToCount(this.testCount);
+            }
+          }
+
+          result.endTime = new Date();
+          result.count = test.getCount();
+
+          return result;
+        },
+
+        runPrototypeTest: function(result) {
+          var test = null;
+          result.startTime = new Date();
+
+          for(var iteration = 0; iteration < parseInt(this.iterations, 10); iteration ++) {
+            test = new DS.Filename2();
+            test.init();
+            for(var subIteration = 0; subIteration < parseInt(this.subIterations, 10); subIteration ++) {
+              test.addToCount(this.testCount);
+            }
+          }
+
+          result.endTime = new Date();
+          result.count = test.getCount();
+
+          return result;
+        },
+
+      });
+
+    })();
+  </script>
+</dom-module>
