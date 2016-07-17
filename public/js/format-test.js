@@ -1,4 +1,6 @@
 (function($){
+  'use strict';
+
   $.fn.PROJ = $.fn.PROJ || {};
 
   var ds = {
@@ -48,6 +50,8 @@
 
 
 (function($) {
+  'use strict';
+
   window.DS = window.DS || {};
 
   window.DS.Filename = function() {
@@ -96,6 +100,7 @@
 
   var ds = function() {
     this.count = 0;
+    this.init();
   };
 
   ds.prototype.addToCount = function(num) {
