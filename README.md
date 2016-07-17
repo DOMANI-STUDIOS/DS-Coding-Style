@@ -2,9 +2,9 @@
 
 ##Docs Table of Contents
 
-* [General]('docs/general.md')
-* [JavaScript]('docs/javascript.md')
-* [CSS]('docs/css.md')
+* [General](docs/general.md)
+* [JavaScript](docs/javascript.md)
+* [CSS](docs/css.md)
 
 ##Running Tests
 
