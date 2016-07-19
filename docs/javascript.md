@@ -65,26 +65,28 @@ $.PROJ.Filename('listen');
 
   window.DS = function() {
     var self = this;
+    self.exampleProperty = 'exampleProperty';
     self.publicFunction = publicFunction;
 
     init();
 
     function init() {
-      listen();
+      _listen();
     }
 
-    function listen() {
+    function _listen() {
 
     }
 
     function publicFunction() {
 
     }
-  }
+  };
 
   $(document).ready(function() {
-    var dsObject = new DS();
+    var dsObject = new window.DS();
     dsObject.publicFunction();
+    var exampleProperty = dsObject.exampleProperty;
   });
 })(jQuery);
 ```
@@ -116,7 +118,6 @@ $.PROJ.Filename('listen');
   }
 
   window.DS = ds;
-
 })(jQuery);
 ```
 
@@ -125,6 +126,37 @@ $.PROJ.Filename('listen');
 * What would this look like in the new ES6 [class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) format?
 * What key considerations would be necessary in terms of static properties?
 * How does the class format perform compared to the others?
+
+```javascript
+(function($) {
+  'use strict';
+
+  window.DS = class {
+    constructor() {
+      this.exampleProperty = 'exampleProperty';
+      this._listen();
+    }
+
+    _listen() {
+
+    }
+
+    get exampleProperty() {
+      return this.exampleProperty;
+    }
+
+    publicFunction() {
+
+    }
+  };
+
+  $(document).ready(function() {
+    var dsObject = new window.DS();
+    dsObject.publicFunction();
+    var exampleProperty = dsObject.exampleProperty;
+  });
+})(jQuery);
+```
 
 ---
 
